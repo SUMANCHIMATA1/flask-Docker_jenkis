@@ -24,7 +24,9 @@ pipeline{
         stage("Deploy Docker Container"){
             steps{
                 script{
-                bat 'docker run -d -p 5000:5000 --name flask-container flask-jenkins-image:latest'
+                    bat 'docker stop flask-container || exit 0'
+                    bat 'docker rm flask-container || exit 0'
+                    bat 'docker run -d -p 5000:5000 --name flask-container flask-jenkins-image:latest'
                 }
             }
         }
